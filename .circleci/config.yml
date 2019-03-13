@@ -13,14 +13,12 @@ jobs:
             pip install docker-squash
       - run:
           name: Build Docker image
-          command: |
-            export VCS_REF=$(git rev-parse --short HEAD)
-            docker build --build-arg VCS_REF=$VCS_REF -t unsquashed .
+          command: docker build --build-arg VCS_REF=${CIRCLE_SHA1} -t unsquashed .
       - run:
           name: Squash Docker image
           command: |
-            docker-squash -t jlivermont/docker-base:$CIRCLE_BUILD_NUM unsquashed
-            docker tag jlivermont/docker-base:$CIRCLE_BUILD_NUM jlivermont/docker-base:latest
+            docker-squash -t jlivermont/docker-base:${CIRCLE_BUILD_NUM} unsquashed
+            docker tag jlivermont/docker-base:${CIRCLE_BUILD_NUM} jlivermont/docker-base:latest
       - run:
           name: Push Docker image
           command: |
@@ -30,3 +28,10 @@ jobs:
       - run:
           name: Trigger update of build badges
           command: curl -X POST https://hooks.microbadger.com/images/jlivermont/docker-base/IqXaMveOSlNtsAv7GxMhZw6cLwU=
+      - run:
+          name: Trigger downstream build
+          command: |
+            curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d '{ "build_parameters": { "TRIGGERED_BY": "${CIRCLE_PROJECT_REPONAME}", "NEW_UPSTREAM_VERSION": "${CIRCLE_BUILD_NUM}" } }' \
+            "https://circleci.com/api/v1.1/project/github/jlivermont/docker-base-sinatra/tree/master?circle-token=${API_TOKEN}"
