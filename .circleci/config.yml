@@ -28,5 +28,5 @@ jobs:
             docker push jlivermont/docker-base:${CIRCLE_BUILD_NUM}
             docker push jlivermont/docker-base:latest
       - run:
-          name: Update build badge
+          name: Trigger update of build badges
           command: curl -X POST https://hooks.microbadger.com/images/jlivermont/docker-base/IqXaMveOSlNtsAv7GxMhZw6cLwU=
