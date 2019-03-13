@@ -1,6 +1,7 @@
 # docker-base
 
 [![CircleCI](https://circleci.com/gh/jlivermont/docker-base/tree/master.svg?style=svg)](https://circleci.com/gh/jlivermont/docker-base/tree/master)
+[![](https://images.microbadger.com/badges/image/jlivermont/docker-base.svg)](https://microbadger.com/images/jlivermont/docker-base "Get your own image badge on microbadger.com")
 
 ## Introduction
 
