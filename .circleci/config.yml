@@ -17,14 +17,14 @@ jobs:
       - run:
           name: Squash Docker image
           command: |
-            docker-squash -t jlivermont/docker-base:${CIRCLE_BUILD_NUM} unsquashed
-            docker tag jlivermont/docker-base:${CIRCLE_BUILD_NUM} jlivermont/docker-base:latest
+            docker-squash -t jlivermont/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_BUILD_NUM} unsquashed
+            docker tag jlivermont/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_BUILD_NUM} jlivermont/${CIRCLE_PROJECT_REPONAME}:latest
       - run:
           name: Push Docker image
           command: |
             echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-            docker push jlivermont/docker-base:${CIRCLE_BUILD_NUM}
-            docker push jlivermont/docker-base:latest
+            docker push jlivermont/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_BUILD_NUM}
+            docker push jlivermont/${CIRCLE_PROJECT_REPONAME}:latest
       - run:
           name: Trigger update of build badges
           command: curl -X POST https://hooks.microbadger.com/images/jlivermont/docker-base/IqXaMveOSlNtsAv7GxMhZw6cLwU=
