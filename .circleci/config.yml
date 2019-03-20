@@ -29,9 +29,16 @@ jobs:
           name: Trigger update of build badges
           command: curl -X POST https://hooks.microbadger.com/images/jlivermont/docker-base/IqXaMveOSlNtsAv7GxMhZw6cLwU=
       - run:
-          name: Trigger downstream build
+          name: Trigger downstream build of docker-base-sinatra
           command: |
             curl -X POST \
             -H 'Content-Type: application/json' \
             -d '{ "build_parameters": { "TRIGGERED_BY": "${CIRCLE_PROJECT_REPONAME}", "NEW_UPSTREAM_VERSION": "${CIRCLE_BUILD_NUM}" } }' \
             "https://circleci.com/api/v1.1/project/github/jlivermont/docker-base-sinatra/tree/master?circle-token=${API_TOKEN}"
+      - run:
+          name: Trigger downstream build of docker-base-rails
+          command: |
+            curl -X POST \
+            -H 'Content-Type: application/json' \
+            -d '{ "build_parameters": { "TRIGGERED_BY": "${CIRCLE_PROJECT_REPONAME}", "NEW_UPSTREAM_VERSION": "${CIRCLE_BUILD_NUM}" } }' \
+            "https://circleci.com/api/v1.1/project/github/jlivermont/docker-base-rails/tree/master?circle-token=${API_TOKEN}"
