@@ -1,4 +1,4 @@
-FROM alpine:3.9.2
+FROM alpine:3.9.3
 
 ARG VCS_REF
 
@@ -17,6 +17,7 @@ WORKDIR /app
 
 RUN apk add --no-cache \
     curl \
-    ca-certificates
+    ca-certificates \
+    bash
 
-CMD ["/bin/sh"]
+CMD ["/bin/bash"]
