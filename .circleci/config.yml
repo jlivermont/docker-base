@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: docker:18.09.3-git
+      - image: docker:18.09.6-git
     steps:
       - checkout
       - setup_remote_docker
@@ -33,6 +33,7 @@ jobs:
           command: |
             curl -X POST \
             -H 'Content-Type: application/json' \
+            -d "{ \"build_parameters\": { \"TRIGGERED_BY\": \"${CIRCLE_PROJECT_REPONAME}\", \"NEW_UPSTREAM_VERSION\": \"${CIRCLE_BUILD_NUM}\" } }" \
             -d '{ "build_parameters": { "TRIGGERED_BY": "${CIRCLE_PROJECT_REPONAME}", "NEW_UPSTREAM_VERSION": "${CIRCLE_BUILD_NUM}" } }' \
             "https://circleci.com/api/v1.1/project/github/jlivermont/docker-base-sinatra/tree/master?circle-token=${API_TOKEN}"
       - run:
@@ -40,5 +41,5 @@ jobs:
           command: |
             curl -X POST \
             -H 'Content-Type: application/json' \
-            -d '{ "build_parameters": { "TRIGGERED_BY": "${CIRCLE_PROJECT_REPONAME}", "NEW_UPSTREAM_VERSION": "${CIRCLE_BUILD_NUM}" } }' \
+            -d "{ \"build_parameters\": { \"TRIGGERED_BY\": \"${CIRCLE_PROJECT_REPONAME}\", \"NEW_UPSTREAM_VERSION\": \"${CIRCLE_BUILD_NUM}\" } }" \
             "https://circleci.com/api/v1.1/project/github/jlivermont/docker-base-rails/tree/master?circle-token=${API_TOKEN}"
